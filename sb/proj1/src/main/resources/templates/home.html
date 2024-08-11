@@ -1,0 +1,115 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gerenciar Clientes</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: white;
+        }
+        header {
+            background-color: #333;
+            color: white;
+            padding: 10px 0;
+            text-align: center;
+        }
+        nav {
+            margin: 10px 0;
+        }
+        nav a {
+            margin: 0 15px;
+            color: white;
+            text-decoration: none;
+        }
+        main {
+            padding: 20px;
+            background-color: white;
+            max-width: 900px;
+            margin: 0 auto;
+            border-radius: 5px;
+        }
+        footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 10px 0;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Gerenciar Clientes</h1>
+    </header>
+
+    <main>
+        <section id="add-client">
+            <h2>Adicionar Cliente</h2>
+            <form id="clientForm">
+                <label for="name">Nome:</label>
+                <input type="text" id="name" name="name" required>
+                <button type="submit">Adicionar Cliente</button>
+            </form>
+        </section>
+
+        <section id="client-list">
+            <h2>Lista de Clientes</h2>
+            <div id="clientContainer"></div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 Meu Site Básico. Todos os direitos reservados.</p>
+    </footer>
+
+    <script>
+        // Função para carregar a lista de clientes
+        function carregarClientes() {
+            fetch('http://localhost:8080/clientes')
+                .then(response => response.json())
+                .then(data => {
+                    const container = document.getElementById('clientContainer');
+                    container.innerHTML = ''; // Limpar o conteúdo existente
+
+                    data.forEach(cliente => {
+                        const clienteDiv = document.createElement('div');
+                        clienteDiv.textContent = `ID: ${cliente.id}, Nome: ${cliente.name}`;
+                        container.appendChild(clienteDiv);
+                    });
+                })
+                .catch(error => console.error('Erro ao carregar clientes:', error));
+        }
+
+        // Adicionar um cliente
+        document.getElementById('clientForm').addEventListener('submit', function(event) {
+            event.preventDefault(); // Impede o envio padrão do formulário
+
+            const name = document.getElementById('name').value;
+
+            fetch('http://localhost:8080/clientes/adicionar', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ name: name })
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log('Cliente adicionado:', data);
+                carregarClientes(); // Atualiza a lista de clientes após adicionar
+            })
+            .catch(error => console.error('Erro ao adicionar cliente:', error));
+        });
+
+        // Carregar a lista de clientes ao carregar a página
+        window.onload = carregarClientes;
+    </script>
+</body>
+</html>
