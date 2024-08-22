@@ -1,10 +1,14 @@
 package com.example.proj1.entities;
 
+import java.util.Set;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -18,6 +22,9 @@ public class Cliente {
     @Column(name = "nome", length = 100)
     private String name;
     
+    @OneToMany(mappedBy = "cliente", fetch = FetchType.LAZY)
+    private Set<Pedido> pedidos;
+
     public Cliente (){}
     public Cliente(Integer id, String name) {
         this.id = id;
@@ -38,5 +45,11 @@ public class Cliente {
     }
     public void setId(Integer id) {
         this.id = id;
+    }
+    public Set<Pedido> getPedidos() {
+        return pedidos;
+    }
+    public void setPedidos(Set<Pedido> pedidos) {
+        this.pedidos = pedidos;
     }
 }
