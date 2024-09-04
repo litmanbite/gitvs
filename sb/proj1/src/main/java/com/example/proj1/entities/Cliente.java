@@ -23,6 +23,14 @@ public class Cliente {
     private Integer id;
     @Column(name = "nome", length = 100)
     private String name;
+    @Column(name = "cpf", length = 11)
+    private String cpf;
+    public String getCpf() {
+        return cpf;
+    }
+    public void setCpf(String cpf) {
+        this.cpf = cpf;
+    }
     @JsonIgnore
     @OneToMany(mappedBy = "cliente", fetch = FetchType.LAZY)
     private Set<Pedido> pedidos;
