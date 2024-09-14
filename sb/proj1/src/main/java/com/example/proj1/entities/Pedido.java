@@ -3,6 +3,7 @@ package com.example.proj1.entities;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.List;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -13,6 +14,12 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+@NoArgsConstructor
+@AllArgsConstructor
+@Data
 @Entity
 @Table(name ="pedido")
 public class Pedido {
@@ -30,39 +37,9 @@ public class Pedido {
     @Column(name="total",length = 20, precision = 2)
     private BigDecimal total;
     
-    public LocalDate getData() {
-        return data;
-    }
-    public void setData(LocalDate data) {
-        this.data = data;
-    }
-    public Cliente getCliente() {
-        return cliente;
-    }
-    public void setCliente(Cliente cliente) {
-        this.cliente = cliente;
-    }
-    public Integer getId() {
-        return id;
-    }
-    public void setId(Integer id) {
-        this.id = id;
-    }
-    public BigDecimal getTotal() {
-        return total;
-    }
-    public void setTotal(BigDecimal total) {
-        this.total = total;
-    }
-    
     @OneToMany(mappedBy = "pedido")
-    private ArrayList<ItemPedido> itens;
+    private List<ItemPedido> itens;
 
-    public ArrayList<ItemPedido> getItens() {
-        return itens;
-    }
-    public void setItens(ArrayList<ItemPedido> itens) {
-        this.itens = itens;
-    }
+    
     
 }

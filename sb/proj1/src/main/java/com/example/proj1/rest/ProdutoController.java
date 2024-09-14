@@ -34,8 +34,11 @@ public class ProdutoController {
 
     @GetMapping("/{id}")
     public Produto getProdutoById(@PathVariable Integer id){
-        return p.findOneById(id).orElseThrow(()-> new ResponseStatusException(HttpStatus.NOT_FOUND));
-                
+        //return p.findOneById(id).orElseThrow(()-> new ResponseStatusException(HttpStatus.NOT_FOUND));
+        if (p.findOneById(id) != null)
+            return p.findOneById(id);   
+        else 
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);     
     }
 
     @PostMapping("/produtos")

@@ -11,11 +11,11 @@ import java.util.Optional;
 
 public interface Produtos extends JpaRepository<Produto,Integer> {
 
-    List<Produto> findByName(String nome);
+    List<Produto> findByNome(String nome);
 
     Produto findOneById(int id);
 
-    boolean existsByName(String nome);
+    boolean existsByNome(String nome);
 
      @SuppressWarnings("null")
     Optional<Produto> findById(Integer id);
