@@ -11,6 +11,7 @@ import com.example.proj1.entities.Cliente;
 import com.example.proj1.entities.ItemPedido;
 import com.example.proj1.entities.Pedido;
 import com.example.proj1.entities.Produto;
+import com.example.proj1.entities.StatusPedido;
 import com.example.proj1.repositorio.Clientes;
 import com.example.proj1.repositorio.Itens;
 import com.example.proj1.repositorio.Pedidos;
@@ -23,6 +24,8 @@ import jakarta.transaction.TransactionScoped;
 import jakarta.transaction.Transactional;
 
 import com.example.proj1.Excep.Exception;
+import com.example.proj1.Excep.pedidoNotFoundExcep;
+
 import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 @Service//permite que ela seja injetada
@@ -46,6 +49,7 @@ public class PedidoServiceImpl implements PedidosService{
         pedido.setTotal(pedidoDTO.getTotal());
         pedido.setData(LocalDate.now());
         pedido.setCliente(c);
+        pedido.setStatus(StatusPedido.REALIZADO);
         
         List<ItemPedido> listI = converterItem(pedido, pedidoDTO.getItens());
         repository.save(pedido);
@@ -79,6 +83,18 @@ public class PedidoServiceImpl implements PedidosService{
     @Override
     public Optional<Pedido> obterPedido(Integer id) {
         return repository.findByIdFetchItens(id);
+    }
+
+    @Override
+    @Transactional
+    public void attStatus(Integer id, StatusPedido s) {
+        repository
+                .findById(id)
+                .map(p -> {
+                    p.setStatus(s);
+                    return repository.save(p);
+                }).orElseThrow(() -> new pedidoNotFoundExcep());
+                    
     }
     
     

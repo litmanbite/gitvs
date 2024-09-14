@@ -5,11 +5,13 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 
 import com.example.proj1.entities.Cliente;
 import com.example.proj1.repositorio.Clientes;
 
 @SpringBootApplication
+@ComponentScan(basePackages = "com.example.proj1")
 public class Proj1Application {
 
 	@Bean
@@ -19,6 +21,7 @@ public class Proj1Application {
 			c.save(cc);
 		};
 	}
+	
 	public static void main(String[] args) {
 		SpringApplication.run(Proj1Application.class, args);
 	}

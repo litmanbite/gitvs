@@ -7,12 +7,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 
 import com.example.proj1.entities.ItemPedido;
 import com.example.proj1.entities.Pedido;
+import com.example.proj1.entities.StatusPedido;
 import com.example.proj1.rest.dto.InfoPedidoDTO;
 import com.example.proj1.rest.dto.PedidoDTO;
+import com.example.proj1.rest.dto.attStatusDTO;
 import com.example.proj1.rest.dto.infoItemPedidoDTO;
 import com.example.proj1.service.PedidosService;
 
@@ -47,15 +51,17 @@ public class PedidoController {
                  .orElseThrow(() -> new ResponseStatusException(NOT_FOUND, "Pedido não encontrado"));
     }
 
+    @PatchMapping("{id}")
+    @ResponseStatus(NOT_FOUND)
+    public void updateStatus(@PathVariable Integer id,@RequestBody attStatusDTO a){
+        String s = a.getNovoStatus();
+        ps.attStatus(id, StatusPedido.valueOf(s));
+    }
+
     private InfoPedidoDTO convert(Pedido p) {
-        return InfoPedidoDTO.builder()
-                .codigo(p.getId())
-                .dataPedido(p.getData())
-                .cpf(p.getCliente().getCpf())
-                .nomeC(p.getCliente().getName())
-                .total(p.getTotal())
-                .items(convert(p.getItens()))
-                .build();
+        InfoPedidoDTO d = new InfoPedidoDTO(p.getId(),p.getCliente().getCpf(),p.getCliente().getName(),p.getTotal(),convert(p.getItens()),p.getStatus().name(),p.getData());
+
+        return d;
     }
 
     private List<infoItemPedidoDTO> convert(List<ItemPedido> list) {
