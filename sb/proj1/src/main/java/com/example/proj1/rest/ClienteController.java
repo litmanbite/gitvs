@@ -13,6 +13,8 @@ import org.springframework.web.server.ResponseStatusException;
 import com.example.proj1.entities.Cliente;
 import com.example.proj1.repositorio.Clientes;
 
+import jakarta.validation.Valid;
+
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -41,7 +43,7 @@ public class ClienteController {
     //request eh o que ta entrando, response saindo
     @PostMapping("/clientes")
     @ResponseStatus(HttpStatus.CREATED)
-    public Cliente save( @RequestBody Cliente cliente ){
+    public Cliente save( @RequestBody @Valid Cliente cliente ){
         Cliente clienteSalvo = c.save(cliente);
         return clienteSalvo;
     }
@@ -62,7 +64,7 @@ public class ClienteController {
 
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void updateCliente(@PathVariable Integer id, @RequestBody Cliente cliente) {
+    public void updateCliente(@PathVariable Integer id, @RequestBody @Valid Cliente cliente) {
         c.findById(id)
             .map(existingCliente -> {
                 cliente.setId(existingCliente.getId()); // Ensures that the ID from the existing client is used

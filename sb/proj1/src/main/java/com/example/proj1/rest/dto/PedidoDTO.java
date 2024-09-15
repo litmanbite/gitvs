@@ -3,9 +3,17 @@ package com.example.proj1.rest.dto;
 import java.math.BigDecimal;
 import java.util.List;
 
+import com.example.proj1.validation.notEmptyList;
+
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+
 public class PedidoDTO {
+    @NotBlank(message = "Informe o cliente")
     private Integer cliente;
+    @NotNull(message = "Total invalido")
     private BigDecimal total;
+    @notEmptyList(m = "Um pedido precisa ter pelo menos um item")
     private List<ItemPedidoDTO> itens;
 
     // Getters and Setters

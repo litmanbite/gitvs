@@ -20,6 +20,8 @@ import com.example.proj1.rest.dto.attStatusDTO;
 import com.example.proj1.rest.dto.infoItemPedidoDTO;
 import com.example.proj1.service.PedidosService;
 
+import jakarta.validation.Valid;
+
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -39,7 +41,7 @@ public class PedidoController {
 
     @PostMapping
     @ResponseStatus(CREATED)
-    public Integer save(@RequestBody PedidoDTO pDto) {
+    public Integer save(@RequestBody @Valid PedidoDTO pDto) {
         Pedido p = ps.salvar(pDto);
         return p.getId();
     }

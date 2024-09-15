@@ -2,6 +2,8 @@ package com.example.proj1.entities;
 
 import java.util.Set;
 
+import org.hibernate.validator.constraints.br.CPF;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.Column;
@@ -12,6 +14,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -27,7 +30,10 @@ public class Cliente {
     @Column(name = "id")
     private Integer id;
     @Column(name = "nome", length = 100)
+    @NotBlank(message = "Campo nome esta invalido!")
     private String name;
+    @CPF(message = "Digite um cpf valido")
+    @NotBlank(message = "Campo cpf esta invalido")
     @Column(name = "cpf", length = 11)
     private String cpf;
     public String getCpf() {

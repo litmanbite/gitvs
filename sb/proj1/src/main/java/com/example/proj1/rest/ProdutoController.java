@@ -8,6 +8,8 @@ import com.example.proj1.entities.Cliente;
 import com.example.proj1.entities.Produto;
 import com.example.proj1.repositorio.Produtos;
 
+import jakarta.validation.Valid;
+
 import java.util.List;
 
 import org.springframework.data.domain.Example;
@@ -43,7 +45,7 @@ public class ProdutoController {
 
     @PostMapping("/produtos")
     @ResponseStatus(HttpStatus.CREATED)
-    public Produto save( @RequestBody Produto produto ){
+    public Produto save( @RequestBody @Valid Produto produto ){
         Produto produtoSalvo = p.save(produto);
         return produtoSalvo;
     }
@@ -64,7 +66,7 @@ public class ProdutoController {
 
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void updateProduto(@PathVariable Integer id, @RequestBody Produto produto) {
+    public void updateProduto(@PathVariable Integer id, @RequestBody @Valid Produto produto) {
         p.findById(id)
             .map(existingProduto -> {
                 produto.setId(existingProduto.getId()); // Ensures that the ID from the existing client is used
