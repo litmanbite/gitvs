@@ -9,11 +9,11 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
 public class PedidoDTO {
-    @NotBlank(message = "Informe o cliente")
+    @NotBlank(message = "{campo.codigo-cliente.obrigatorio}")
     private Integer cliente;
-    @NotNull(message = "Total invalido")
+    @NotNull(message = "{campo.total-pedido.obrigatorio}")
     private BigDecimal total;
-    @notEmptyList(m = "Um pedido precisa ter pelo menos um item")
+    @notEmptyList(m = "{campo.items-pedido.obrigatorio}")
     private List<ItemPedidoDTO> itens;
 
     // Getters and Setters

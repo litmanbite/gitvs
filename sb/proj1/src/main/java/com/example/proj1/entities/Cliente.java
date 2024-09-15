@@ -30,10 +30,10 @@ public class Cliente {
     @Column(name = "id")
     private Integer id;
     @Column(name = "nome", length = 100)
-    @NotBlank(message = "Campo nome esta invalido!")
+    @NotBlank(message = "{campo.nome.obrigatorio}")
     private String name;
-    @CPF(message = "Digite um cpf valido")
-    @NotBlank(message = "Campo cpf esta invalido")
+    @CPF(message = "{campo.cpf.invalido}")
+    @NotBlank(message = "{campo.cpf.obrigatorio}")
     @Column(name = "cpf", length = 11)
     private String cpf;
     public String getCpf() {

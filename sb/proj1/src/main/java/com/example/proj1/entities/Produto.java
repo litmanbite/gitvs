@@ -24,9 +24,9 @@ public class Produto {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id; 
     @Column(name = "preco_unitario")
-    @NotNull(message = "Campo preco invalido")
+    @NotNull(message = "{campo.preco.obrigatorio}")
     private BigDecimal preco;
-    @NotBlank(message = "Campo nome invalido")
+    @NotBlank(message = "{campo.descricao.obrigatorio}")
     @Column(name = "nome")   
     private String nome;    
 
